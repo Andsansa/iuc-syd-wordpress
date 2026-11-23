@@ -21,6 +21,7 @@ define(
 );
 
 require_once IUC_PORTAL_FEATURES_PATH . 'includes/private-requests.php';
+require_once IUC_PORTAL_FEATURES_PATH . 'includes/my-company.php';
 
 /**
  * Load the plugin's frontend styles.
