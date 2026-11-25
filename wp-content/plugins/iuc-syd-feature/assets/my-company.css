@@ -1,41 +1,41 @@
 /* Mitt företag ([iuc_my_company]).
-   Samma utseende som MittForetag.css i React-versionen.
+   Följer IUC-nätverkets grafiska profil:
+   - Typsnitt: Arial i rubrik och brödtext.
+   - Petrol är profilfärgen. Syre används som bakgrundsplatta med petrol text.
+   - Guld bara i feta, stora rubriker mot petrol. Drivkraft bara nära petrol.
+   - Platina och Syre kombineras inte, så bara Syre används här.
    Alla klasser börjar med mf- så att de inte krockar med temat eller BuddyPress. */
 
 .mf-page {
-  --mf-bg: #f4f3ee;
-  --mf-surface: #ffffff;
-  --mf-surface-muted: #f1f0eb;
-  --mf-border: #e4e1d8;
-  --mf-input-border: #cfcbc1;
-  --mf-text: #1d2521;
-  --mf-text-muted: #5d6660;
-  --mf-accent: #2e6b5e;
-  --mf-accent-hover: #24574c;
-  --mf-accent-dark: #1d4038;
-  --mf-mint: #e2eee9;
-  --mf-mint-text: #2b574c;
-  --mf-amber: #fbead3;
-  --mf-amber-text: #855514;
-  --mf-neutral: #eceee9;
-  --mf-neutral-text: #34413b;
+  --mf-petrol: #036e78;
+  --mf-petrol-dark: #025860;
+  --mf-drivkraft: #a4ffbb;
+  --mf-guld: #ddb349;
+  --mf-syre: #e4f0f1;
+  --mf-white: #ffffff;
+  --mf-text: #1a1a1a;
+  --mf-text-muted: #4a5a5c;
+  --mf-line: rgba(3, 110, 120, 0.2);
   --mf-error: #a33a2c;
-  --mf-focus: rgba(46, 107, 94, 0.35);
-  --mf-font-heading: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-  --mf-font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --mf-font-label: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --mf-focus: rgba(3, 110, 120, 0.45);
+  --mf-font: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
-  min-height: 70vh;
   padding: 2.5rem 1.25rem 4rem;
-  background: var(--mf-bg);
+  background: var(--mf-white);
   color: var(--mf-text);
-  font-family: var(--mf-font-body);
+  font-family: var(--mf-font);
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.55;
+}
+
+.mf-page *,
+.mf-page *::before,
+.mf-page *::after {
+  box-sizing: border-box;
 }
 
 .mf-container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -44,27 +44,29 @@
 .mf-page-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1.25rem 2rem;
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--mf-text);
   background: transparent;
 }
 
 .mf-page-title {
   margin: 0 0 0.5rem;
-  color: var(--mf-text);
-  font-family: var(--mf-font-heading);
-  font-size: clamp(1.9rem, 1.5rem + 1.2vw, 2.4rem);
-  font-weight: 700;
+  color: var(--mf-petrol);
+  font-family: var(--mf-font);
+  font-size: clamp(2rem, 1.5rem + 1.6vw, 2.75rem);
+  font-weight: 400;
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .mf-page-intro {
-  max-width: 75ch;
+  max-width: 65ch;
   margin: 0;
-  color: var(--mf-text-muted);
+  color: var(--mf-text);
   font-size: 1.05rem;
 }
 
@@ -78,7 +80,7 @@
 
 @media (min-width: 960px) {
   .mf-layout {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 3fr 2fr;
   }
 }
 
@@ -89,16 +91,16 @@
 }
 
 .mf-preview {
-  max-width: 720px;
+  max-width: 760px;
 }
 
-/* Kort */
+/* Kort: Syre-platta med petrol rubrik */
 
 .mf-card {
-  padding: 1.5rem;
-  background: var(--mf-surface);
-  border: 1px solid var(--mf-border);
-  border-radius: 14px;
+  padding: 1.75rem;
+  background: var(--mf-syre);
+  border: 0;
+  border-radius: 6px;
 }
 
 .mf-card > :last-child {
@@ -107,17 +109,17 @@
 
 .mf-card-title {
   margin: 0 0 0.4rem;
-  color: var(--mf-text);
-  font-family: var(--mf-font-heading);
-  font-size: 1.3rem;
-  font-weight: 600;
+  color: var(--mf-petrol);
+  font-family: var(--mf-font);
+  font-size: 1.35rem;
+  font-weight: 700;
   line-height: 1.25;
 }
 
 .mf-card-intro {
-  margin: 0 0 1rem;
+  margin: 0 0 1.25rem;
   color: var(--mf-text-muted);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
 }
 
 .mf-muted {
@@ -127,57 +129,70 @@
 }
 
 .mf-message p {
-  margin: 0 0 1rem;
+  margin: 0 0 1.25rem;
+  color: var(--mf-petrol);
+  font-size: 1.05rem;
 }
 
-/* Företagskortet */
+/* Företagskortet: petrol bakgrund, guld rubrik, vit text */
+
+.mf-card:has(.mf-company-head) {
+  background: var(--mf-petrol);
+  color: var(--mf-white);
+}
 
 .mf-company-head {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.1rem;
   margin-bottom: 1.25rem;
 }
 
 .mf-company-name {
-  margin: 0 0 0.15rem;
-  color: var(--mf-text);
-  font-family: var(--mf-font-heading);
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.2;
+  margin: 0 0 0.2rem;
+  color: var(--mf-guld);
+  font-family: var(--mf-font);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.mf-card:has(.mf-company-head) .mf-muted {
+  color: var(--mf-syre);
 }
 
 .mf-company-description {
-  max-width: 70ch;
-  margin: 0 0 1rem;
+  max-width: 65ch;
+  margin: 0 0 1.25rem;
+  color: var(--mf-white);
 }
 
 .mf-company-contact {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1.25rem;
-  margin: 0 0 1rem;
+  gap: 0.4rem 1.5rem;
+  margin: 0 0 1.25rem;
   font-size: 0.95rem;
 }
 
-.mf-company-contact a,
-.mf-row-link {
-  color: inherit;
-  text-decoration: none;
+.mf-company-contact a {
+  color: var(--mf-white);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.45);
+  text-underline-offset: 3px;
 }
 
-.mf-company-contact a:hover,
-.mf-row-link:hover {
-  text-decoration: underline;
+.mf-company-contact a:hover {
+  text-decoration-color: var(--mf-white);
 }
 
 .mf-notice {
   margin: 0;
-  padding: 0.75rem 1rem;
-  background: var(--mf-surface-muted);
-  border-radius: 10px;
-  color: var(--mf-text-muted);
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--mf-syre);
+  border-radius: 0 4px 4px 0;
+  color: var(--mf-syre);
   font-size: 0.9rem;
 }
 
@@ -187,21 +202,21 @@
   display: inline-grid;
   flex: none;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
-  background: var(--mf-mint);
-  color: var(--mf-mint-text);
-  font-family: var(--mf-font-heading);
-  font-size: 0.78rem;
+  background: var(--mf-white);
+  color: var(--mf-petrol);
+  font-family: var(--mf-font);
+  font-size: 0.85rem;
   font-weight: 700;
 }
 
 .mf-avatar-large {
-  width: 3.9rem;
-  height: 3.9rem;
-  border-radius: 10px;
-  font-size: 1.25rem;
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 6px;
+  font-size: 1.4rem;
 }
 
 /* Listor */
@@ -210,7 +225,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--mf-border);
+  border-top: 1px solid var(--mf-line);
 }
 
 .mf-list-plain {
@@ -218,15 +233,15 @@
 }
 
 .mf-card-title + .mf-list {
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 }
 
 .mf-row {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.9rem;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--mf-border);
+  border-bottom: 1px solid var(--mf-line);
 }
 
 .mf-row:last-child {
@@ -241,13 +256,25 @@
 
 .mf-row-name {
   margin: 0;
-  font-weight: 600;
+  color: var(--mf-text);
+  font-weight: 700;
 }
 
 .mf-row-detail {
   margin: 0;
   color: var(--mf-text-muted);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
+}
+
+.mf-row-link {
+  color: var(--mf-petrol);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mf-row-link:hover {
+  color: var(--mf-petrol-dark);
 }
 
 .mf-row-actions {
@@ -261,125 +288,52 @@
 .mf-empty {
   margin: 0;
   padding-top: 1rem;
-  border-top: 1px solid var(--mf-border);
+  border-top: 1px solid var(--mf-line);
   color: var(--mf-text-muted);
 }
 
-/* Etiketter */
+/* Etiketter. Guld och Drivkraft används inte här eftersom korten är ljusa. */
 
 .mf-badge {
   display: inline-block;
-  padding: 0.3rem 0.65rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid transparent;
   border-radius: 999px;
-  font-family: var(--mf-font-label);
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-family: var(--mf-font);
+  font-size: 0.75rem;
+  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
 .mf-badge-main {
-  background: var(--mf-accent-dark);
-  color: #ffffff;
+  background: var(--mf-petrol);
+  color: var(--mf-white);
 }
 
 .mf-badge-visible {
-  background: var(--mf-mint);
-  color: var(--mf-mint-text);
+  background: var(--mf-white);
+  border-color: var(--mf-petrol);
+  color: var(--mf-petrol);
 }
 
 .mf-badge-waiting {
-  background: var(--mf-amber);
-  color: var(--mf-amber-text);
+  background: var(--mf-white);
+  border-color: var(--mf-text-muted);
+  border-style: dashed;
+  color: var(--mf-text-muted);
 }
 
 .mf-badge-neutral {
-  background: var(--mf-neutral);
-  color: var(--mf-neutral-text);
+  background: var(--mf-white);
+  color: var(--mf-text);
 }
 
 .mf-badge-standalone {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
 }
 
 /* Samtycke */
-
-.mf-consent {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0;
-  font-size: 0.95rem;
-  cursor: pointer;
-}
-
-.mf-consent input {
-  width: 1.15rem;
-  height: 1.15rem;
-  margin: 0;
-  accent-color: var(--mf-accent);
-  cursor: pointer;
-}
-
-/* Knappar */
-
-.mf-button,
-.mf-button-quiet {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.9rem;
-  border-radius: 9px;
-  font-family: var(--mf-font-heading);
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.mf-button {
-  padding: 0.6rem 1.35rem;
-  background: var(--mf-accent);
-  border: 0;
-  color: #ffffff;
-  font-size: 1rem;
-}
-
-.mf-button:hover {
-  background: var(--mf-accent-hover);
-  color: #ffffff;
-}
-
-.mf-button-quiet {
-  padding: 0.6rem 1.1rem;
-  background: #faf9f6;
-  border: 1px solid var(--mf-border);
-  color: var(--mf-mint-text);
-  font-size: 0.98rem;
-}
-
-.mf-button-quiet:hover {
-  background: var(--mf-surface);
-  border-color: var(--mf-input-border);
-}
-
-.mf-button:focus-visible,
-.mf-button-quiet:focus-visible,
-.mf-consent input:focus-visible,
-.mf-company-contact a:focus-visible,
-.mf-row-link:focus-visible {
-  outline: 3px solid var(--mf-focus);
-  outline-offset: 2px;
-}
-
-/* Meddelanden */
-
-.mf-saved {
-  margin: 0 0 0.75rem;
-  color: var(--mf-accent);
-  font-size: 0.92rem;
-}
 
 .mf-consent-form {
   display: inline-flex;
@@ -388,10 +342,91 @@
   margin: 0;
 }
 
+.mf-consent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  color: var(--mf-text);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.mf-consent input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  accent-color: var(--mf-petrol);
+  cursor: pointer;
+}
+
+/* Knappar: rundade petrol-knappar som i nyhetsbrevet */
+
+.mf-button,
+.mf-button-quiet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.65rem 1.5rem;
+  border: 2px solid var(--mf-petrol);
+  border-radius: 999px;
+  font-family: var(--mf-font);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.mf-button {
+  background: var(--mf-petrol);
+  color: var(--mf-white);
+}
+
+.mf-button:hover {
+  background: var(--mf-petrol-dark);
+  border-color: var(--mf-petrol-dark);
+  color: var(--mf-white);
+}
+
+.mf-button-quiet {
+  background: var(--mf-white);
+  color: var(--mf-petrol);
+}
+
+.mf-button-quiet:hover {
+  background: var(--mf-petrol);
+  color: var(--mf-white);
+}
+
+.mf-button:focus-visible,
+.mf-button-quiet:focus-visible,
+.mf-consent input:focus-visible,
+.mf-row-link:focus-visible {
+  outline: 3px solid var(--mf-focus);
+  outline-offset: 2px;
+}
+
+.mf-company-contact a:focus-visible {
+  outline: 3px solid var(--mf-drivkraft);
+  outline-offset: 2px;
+}
+
+/* Meddelanden */
+
+.mf-saved {
+  margin: 0 0 0.75rem;
+  color: var(--mf-petrol);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
 .mf-error {
   margin: 0 0 0.75rem;
   color: var(--mf-error);
   font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .mf-visually-hidden {
@@ -410,7 +445,11 @@
 
 @media (max-width: 519px) {
   .mf-page {
-    padding-top: 1.75rem;
+    padding: 1.75rem 1rem 3rem;
+  }
+
+  .mf-card {
+    padding: 1.25rem;
   }
 
   .mf-row {
@@ -420,6 +459,6 @@
   .mf-row-actions {
     justify-content: flex-start;
     width: 100%;
-    padding-left: 3.1rem;
+    padding-left: 3.4rem;
   }
 }
