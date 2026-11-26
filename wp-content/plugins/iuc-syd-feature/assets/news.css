@@ -1,71 +1,317 @@
-/* IUC Syd – news and events (member view) */
+/* IUC Syd – news and events (member view)
+ *
+ * Follows the IUC network's communication platform:
+ *  - Petrol is the profile colour (headings, text, plates).
+ *  - Syre is used as plate colour with petrol text.
+ *  - Guld only in bold text of at least 18 pt, and only against petrol.
+ *  - Drivkraft is reserved for call-to-action buttons (not used here).
+ *  - Platina and Syre are never combined; Drivkraft and Guld are never combined.
+ *  - Helvetica, simple and clear, high contrast.
+ */
 
 .iuc-news {
-  max-width: 760px;
+  --iuc-petrol: #036e78;
+  --iuc-syre: #e4f0f1;
+  --iuc-guld: #ddb349;
+  --iuc-white: #ffffff;
+  /* --iuc-drivkraft: #a4ffbb; reserved for CTA buttons, e.g. "Boka din plats" */
+
+  width: 100%;
+  margin-bottom: 4rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--iuc-petrol);
 }
+
+/* Let the page title line up with the wide news section (block themes). */
+body:has(.iuc-news) .wp-block-post-title {
+  max-width: var(--wp--style--global--wide-size, 1340px);
+}
+
+.iuc-news-lead {
+  max-width: 42rem;
+  margin: 0 0 1.75rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+/* Filter ------------------------------------------------------------- */
 
 .iuc-news-tabs {
   display: flex;
-  gap: 0.5rem;
-  margin: 0 0 1.25rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 2rem;
 }
 
 .iuc-news-tabs a {
-  padding: 0.4rem 0.9rem;
-  border: 1px solid currentColor;
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  border: 2px solid var(--iuc-petrol);
   border-radius: 999px;
+  background: transparent;
+  color: var(--iuc-petrol);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
   text-decoration: none;
-  font-size: 0.9rem;
-  opacity: 0.75;
+}
+
+.iuc-news-tabs a:hover {
+  background: var(--iuc-syre);
 }
 
 .iuc-news-tabs a.is-active,
-.iuc-news-tabs a:hover {
-  opacity: 1;
-  font-weight: 600;
+.iuc-news-tabs a.is-active:hover {
+  background: var(--iuc-petrol);
+  color: var(--iuc-white);
 }
+
+.iuc-news-tabs a:focus-visible {
+  outline: 3px solid var(--iuc-petrol);
+  outline-offset: 2px;
+}
+
+/* List --------------------------------------------------------------- */
+
+.iuc-news {
+  scroll-margin-top: 2rem;
+}
+
+.iuc-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Cards -------------------------------------------------------------- */
 
 .iuc-news-card {
-  padding: 1.25rem 1.5rem;
-  margin: 0 0 1rem;
-  border: 1px solid rgba(128, 128, 128, 0.35);
-  border-left-width: 4px;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  border-radius: 6px;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-.iuc-news-card.iuc-news-event {
-  border-left-color: #1d7a5f;
+.iuc-news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(3, 110, 120, 0.2);
 }
 
-.iuc-news-card.iuc-news-news {
-  border-left-color: #2c5fb3;
+@media (prefers-reduced-motion: reduce) {
+  .iuc-news-card {
+    transition: none;
+  }
+
+  .iuc-news-card:hover {
+    transform: none;
+  }
 }
 
-.iuc-news-card h3 {
-  margin: 0.4rem 0 0.25rem;
+.iuc-news-card header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.iuc-news-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.iuc-news-card h2 {
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .iuc-news-badge {
   display: inline-block;
-  padding: 0.1rem 0.6rem;
+  padding: 0.15rem 0.75rem;
   border-radius: 999px;
-  background: rgba(128, 128, 128, 0.18);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
 }
 
 .iuc-news-meta {
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
-  margin: 0 0 0.75rem;
-  font-size: 0.9rem;
-  opacity: 0.8;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
+.iuc-news-date {
+  font-weight: 700;
+}
+
+.iuc-news-body {
+  max-width: 70ch;
+  margin-top: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.iuc-news-body > :first-child {
+  margin-top: 0;
+}
+
+.iuc-news-body > :last-child {
+  margin-bottom: 0;
+}
+
+.iuc-news-card a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* News: Syre plate, petrol text ---------------------------------------- */
+
+.iuc-news-card.iuc-news-news {
+  background: var(--iuc-syre);
+  color: var(--iuc-petrol);
+}
+
+.iuc-news-news .iuc-news-badge {
+  background: var(--iuc-petrol);
+  color: var(--iuc-white);
+}
+
+/* Event: petrol plate, light text -------------------------------------- */
+
+.iuc-news-card.iuc-news-event {
+  background: var(--iuc-petrol);
+  color: var(--iuc-white);
+}
+
+.iuc-news-event .iuc-news-badge {
+  background: var(--iuc-syre);
+  color: var(--iuc-petrol);
+}
+
+.iuc-news-event .iuc-news-place {
+  color: var(--iuc-syre);
+}
+
+/* Date box: Guld is bold and well above 18 pt, and only on petrol. */
+.iuc-news-datebox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 4.25rem;
+  padding-right: 1.25rem;
+  border-right: 1px solid rgba(228, 240, 241, 0.4);
+  line-height: 1;
+}
+
+.iuc-news-day {
+  color: var(--iuc-guld);
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.iuc-news-month {
+  color: var(--iuc-syre);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Empty state ---------------------------------------------------------- */
+
 .iuc-news-empty {
-  opacity: 0.8;
+  margin: 0;
+  padding: 1.5rem 1.75rem;
+  border-radius: 6px;
+  background: var(--iuc-syre);
+  color: var(--iuc-petrol);
+}
+
+/* Pagination ----------------------------------------------------------- */
+
+.iuc-news-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.iuc-news-page-link {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  border: 2px solid var(--iuc-petrol);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--iuc-petrol);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+a.iuc-news-page-link:hover {
+  background: var(--iuc-petrol);
+  color: var(--iuc-white);
+}
+
+a.iuc-news-page-link:focus-visible {
+  outline: 3px solid var(--iuc-petrol);
+  outline-offset: 2px;
+}
+
+.iuc-news-page-link.is-disabled {
+  border-color: var(--iuc-syre);
+  background: var(--iuc-syre);
+  cursor: default;
+}
+
+.iuc-news-page-status {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* Small screens ------------------------------------------------------ */
+
+@media (max-width: 600px) {
+  .iuc-news-lead {
+    font-size: 1.1rem;
+  }
+
+  .iuc-news-card {
+    padding: 1.25rem;
+  }
+
+  .iuc-news-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .iuc-news-day {
+    font-size: 40px;
+  }
+
+  .iuc-news-card header {
+    gap: 1rem;
+  }
+
+  .iuc-news-datebox {
+    min-width: 3.5rem;
+    padding-right: 1rem;
+  }
 }

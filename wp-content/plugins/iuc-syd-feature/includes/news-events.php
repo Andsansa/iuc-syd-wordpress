@@ -6,7 +6,7 @@
  *   edit and delete news and events.
  * - Members: the shortcode [iuc_news] shows them to logged-in users.
  *
- * Usage: [iuc_news]  [iuc_news type="event" limit="10"]
+ * Usage: [iuc_news]  [iuc_news type="event" limit="5"]  (limit = items per page)
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -246,6 +246,22 @@ function iuc_news_format_date( $value ) {
 }
 
 /**
+ * Day and short month of a stored event date, for the date box.
+ */
+function iuc_news_date_parts( $value ) {
+	$timestamp = strtotime( $value );
+
+	if ( ! $timestamp ) {
+		return null;
+	}
+
+	return array(
+		'day'   => date_i18n( 'j', $timestamp ),
+		'month' => date_i18n( 'M', $timestamp ),
+	);
+}
+
+/**
  * Meta query for the chosen filter: all, news or event.
  */
 function iuc_news_meta_query( $filter ) {
@@ -293,9 +309,10 @@ function iuc_news_meta_query( $filter ) {
 }
 
 /**
- * Display news and events.
+ * Display news and events a few at a time, with paging and a filter.
  *
- * Usage: [iuc_news] or [iuc_news type="event" limit="10"]
+ * Usage: [iuc_news]  [iuc_news type="event" limit="5"]
+ * "limit" is the number of items per page (default 3).
  */
 function iuc_news_shortcode( $atts ) {
 	if ( ! is_user_logged_in() ) {
@@ -309,20 +326,21 @@ function iuc_news_shortcode( $atts ) {
 	$atts = shortcode_atts(
 		array(
 			'type'  => 'all',
-			'limit' => 20,
+			'limit' => 3,
 		),
 		$atts,
 		'iuc_news'
 	);
 
-	$allowed = array( 'all', 'news', 'event' );
-	$filter  = sanitize_key( $atts['type'] );
-	$filter  = in_array( $filter, $allowed, true ) ? $filter : 'all';
-	$limit   = max( 1, min( 50, absint( $atts['limit'] ) ) );
+	$allowed  = array( 'all', 'news', 'event' );
+	$filter   = sanitize_key( $atts['type'] );
+	$filter   = in_array( $filter, $allowed, true ) ? $filter : 'all';
+	$per_page = max( 1, min( 12, absint( $atts['limit'] ) ) );
 
 	// Members can switch between all / news / events when the page shows all.
 	$show_tabs = 'all' === $filter;
 
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only filter and paging.
 	if ( $show_tabs && isset( $_GET['visa'] ) ) {
 		$chosen = sanitize_key( wp_unslash( $_GET['visa'] ) );
 
@@ -330,6 +348,9 @@ function iuc_news_shortcode( $atts ) {
 			$filter = $chosen;
 		}
 	}
+
+	$requested_page = isset( $_GET['sida'] ) ? absint( $_GET['sida'] ) : 1;
+	// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 	$path = IUC_PORTAL_FEATURES_PATH . 'assets/news.css';
 
@@ -340,13 +361,16 @@ function iuc_news_shortcode( $atts ) {
 		file_exists( $path ) ? (string) filemtime( $path ) : '1.0.0'
 	);
 
-	$items = get_posts(
+	// All matching IDs (capped), so that ordering and paging stay correct.
+	$ids = get_posts(
 		array(
 			'post_type'      => 'iuc_news',
 			'post_status'    => 'publish',
-			'posts_per_page' => $limit,
+			'posts_per_page' => 500,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
 			'meta_query'     => iuc_news_meta_query( $filter ), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 		)
 	);
@@ -354,10 +378,10 @@ function iuc_news_shortcode( $atts ) {
 	// Events are easier to read soonest-first.
 	if ( 'event' === $filter ) {
 		usort(
-			$items,
+			$ids,
 			static function ( $a, $b ) {
-				$da = get_post_meta( $a->ID, IUC_NEWS_DATE_META, true );
-				$db = get_post_meta( $b->ID, IUC_NEWS_DATE_META, true );
+				$da = get_post_meta( $a, IUC_NEWS_DATE_META, true );
+				$db = get_post_meta( $b, IUC_NEWS_DATE_META, true );
 
 				if ( $da === $db ) {
 					return 0;
@@ -376,6 +400,22 @@ function iuc_news_shortcode( $atts ) {
 		);
 	}
 
+	$total   = count( $ids );
+	$pages   = max( 1, (int) ceil( $total / $per_page ) );
+	$current = max( 1, min( $pages, $requested_page ) );
+	$offset  = ( $current - 1 ) * $per_page;
+	$items   = array_filter( array_map( 'get_post', array_slice( $ids, $offset, $per_page ) ) );
+
+	$page_url = static function ( $page ) {
+		$url = remove_query_arg( 'sida' );
+
+		if ( $page > 1 ) {
+			$url = add_query_arg( 'sida', $page, $url );
+		}
+
+		return $url . '#iuc-news';
+	};
+
 	$types = iuc_news_types();
 	$tabs  = array(
 		'all'   => 'Alla',
@@ -386,14 +426,21 @@ function iuc_news_shortcode( $atts ) {
 	ob_start();
 	?>
 
-	<section class="iuc-news" aria-labelledby="iuc-news-title">
-		<h2 id="iuc-news-title">Nyheter och event</h2>
+	<section id="iuc-news" class="iuc-news alignwide" aria-label="Nyheter och event">
+		<p class="iuc-news-lead">
+			Det senaste från IUC Syd: nyheter och kommande event i nätverket.
+		</p>
 
 		<?php if ( $show_tabs ) : ?>
 			<nav class="iuc-news-tabs" aria-label="Filtrera">
 				<?php foreach ( $tabs as $key => $label ) : ?>
+					<?php
+					$tab_url = 'all' === $key
+						? remove_query_arg( array( 'visa', 'sida' ) )
+						: add_query_arg( 'visa', $key, remove_query_arg( 'sida' ) );
+					?>
 					<a
-						href="<?php echo esc_url( 'all' === $key ? remove_query_arg( 'visa' ) : add_query_arg( 'visa', $key ) ); ?>"
+						href="<?php echo esc_url( $tab_url . '#iuc-news' ); ?>"
 						<?php echo $key === $filter ? 'aria-current="true" class="is-active"' : ''; ?>
 					>
 						<?php echo esc_html( $label ); ?>
@@ -404,39 +451,72 @@ function iuc_news_shortcode( $atts ) {
 
 		<?php if ( ! $items ) : ?>
 			<p class="iuc-news-empty">Inga nyheter eller event just nu.</p>
-		<?php endif; ?>
+		<?php else : ?>
+			<div class="iuc-news-list">
+				<?php foreach ( $items as $item ) : ?>
+					<?php
+					$type  = get_post_meta( $item->ID, IUC_NEWS_TYPE_META, true );
+					$date  = get_post_meta( $item->ID, IUC_NEWS_DATE_META, true );
+					$place = get_post_meta( $item->ID, IUC_NEWS_LOCATION_META, true );
+					$parts = ( 'event' === $type && $date ) ? iuc_news_date_parts( $date ) : null;
+					?>
+					<article class="iuc-news-card iuc-news-<?php echo esc_attr( $type ); ?>">
+						<header>
+							<?php if ( $parts ) : ?>
+								<div class="iuc-news-datebox" aria-hidden="true">
+									<span class="iuc-news-day"><?php echo esc_html( $parts['day'] ); ?></span>
+									<span class="iuc-news-month"><?php echo esc_html( $parts['month'] ); ?></span>
+								</div>
+							<?php endif; ?>
 
-		<?php foreach ( $items as $item ) : ?>
-			<?php
-			$type  = get_post_meta( $item->ID, IUC_NEWS_TYPE_META, true );
-			$date  = get_post_meta( $item->ID, IUC_NEWS_DATE_META, true );
-			$place = get_post_meta( $item->ID, IUC_NEWS_LOCATION_META, true );
-			?>
-			<article class="iuc-news-card iuc-news-<?php echo esc_attr( $type ); ?>">
-				<header>
-					<span class="iuc-news-badge">
-						<?php echo esc_html( isset( $types[ $type ] ) ? $types[ $type ] : '' ); ?>
+							<div class="iuc-news-head">
+								<span class="iuc-news-badge">
+									<?php echo esc_html( isset( $types[ $type ] ) ? $types[ $type ] : '' ); ?>
+								</span>
+
+								<h2><?php echo esc_html( get_the_title( $item ) ); ?></h2>
+
+								<p class="iuc-news-meta">
+									<?php if ( 'event' === $type && $date ) : ?>
+										<span class="iuc-news-date"><?php echo esc_html( iuc_news_format_date( $date ) ); ?></span>
+									<?php else : ?>
+										<span class="iuc-news-published">Publicerad <?php echo esc_html( get_the_date( 'j F Y', $item ) ); ?></span>
+									<?php endif; ?>
+
+									<?php if ( 'event' === $type && $place ) : ?>
+										<span class="iuc-news-place"><?php echo esc_html( $place ); ?></span>
+									<?php endif; ?>
+								</p>
+							</div>
+						</header>
+
+						<div class="iuc-news-body">
+							<?php echo wp_kses_post( apply_filters( 'the_content', $item->post_content ) ); ?>
+						</div>
+					</article>
+				<?php endforeach; ?>
+			</div>
+
+			<?php if ( $pages > 1 ) : ?>
+				<nav class="iuc-news-pagination" aria-label="Bläddra bland inlägg">
+					<?php if ( $current > 1 ) : ?>
+						<a class="iuc-news-page-link" rel="prev" href="<?php echo esc_url( $page_url( $current - 1 ) ); ?>">&larr; Föregående</a>
+					<?php else : ?>
+						<span class="iuc-news-page-link is-disabled" aria-disabled="true">&larr; Föregående</span>
+					<?php endif; ?>
+
+					<span class="iuc-news-page-status">
+						Sida <?php echo esc_html( (string) $current ); ?> av <?php echo esc_html( (string) $pages ); ?>
 					</span>
-					<h3><?php echo esc_html( get_the_title( $item ) ); ?></h3>
 
-					<p class="iuc-news-meta">
-						<?php if ( 'event' === $type && $date ) : ?>
-							<span><?php echo esc_html( iuc_news_format_date( $date ) ); ?></span>
-						<?php else : ?>
-							<span>Publicerad <?php echo esc_html( get_the_date( 'j F Y', $item ) ); ?></span>
-						<?php endif; ?>
-
-						<?php if ( 'event' === $type && $place ) : ?>
-							<span><?php echo esc_html( $place ); ?></span>
-						<?php endif; ?>
-					</p>
-				</header>
-
-				<div class="iuc-news-body">
-					<?php echo wp_kses_post( apply_filters( 'the_content', $item->post_content ) ); ?>
-				</div>
-			</article>
-		<?php endforeach; ?>
+					<?php if ( $current < $pages ) : ?>
+						<a class="iuc-news-page-link" rel="next" href="<?php echo esc_url( $page_url( $current + 1 ) ); ?>">Nästa &rarr;</a>
+					<?php else : ?>
+						<span class="iuc-news-page-link is-disabled" aria-disabled="true">Nästa &rarr;</span>
+					<?php endif; ?>
+				</nav>
+			<?php endif; ?>
+		<?php endif; ?>
 	</section>
 
 	<?php
