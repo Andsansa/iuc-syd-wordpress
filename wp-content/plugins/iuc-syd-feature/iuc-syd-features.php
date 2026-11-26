@@ -22,7 +22,7 @@ define(
 
 require_once IUC_PORTAL_FEATURES_PATH . 'includes/private-requests.php';
 require_once IUC_PORTAL_FEATURES_PATH . 'includes/my-company.php';
-
+require_once IUC_PORTAL_FEATURES_PATH . 'includes/news-events.php';
 /**
  * Load the plugin's frontend styles.
  */
