@@ -1,0 +1,875 @@
+/* ==========================================================================
+   IUC Syd Medlemsportal – Grafisk profil & Startsida
+   ========================================================================== */
+
+:root {
+	--iuc-petrol: #036e78;
+	--iuc-petrol-dark: #02525a;
+	--iuc-drivkraft: #a4ffbb;
+	--iuc-guld: #ddb349;
+	--iuc-platina: #f0f0f0;
+	--iuc-syre: #e4f0f1;
+	--iuc-white: #ffffff;
+	--iuc-text: #162628;
+	--iuc-muted: #4b5d60;
+	--iuc-border: #cbd9db;
+	--iuc-radius: 10px;
+	--iuc-font: "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.iuc-portal-wrapper {
+	font-family: var(--iuc-font);
+	color: var(--iuc-text);
+	background-color: var(--iuc-white);
+	font-size: 16px;
+	line-height: 1.55;
+}
+
+.iuc-portal-wrapper * {
+	box-sizing: border-box;
+}
+
+.iuc-container {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+/* Toppnavigation */
+.iuc-topbar {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-white);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+	position: sticky;
+	top: 0;
+	z-index: 50;
+}
+
+.iuc-topbar__inner {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 14px 24px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.iuc-logo {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+	color: var(--iuc-white);
+}
+
+.iuc-logo__circle {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background-color: var(--iuc-white);
+	color: var(--iuc-petrol);
+	font-weight: 900;
+	font-size: 15px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	letter-spacing: 0.04em;
+}
+
+.iuc-logo__text {
+	display: flex;
+	flex-direction: column;
+	line-height: 1.1;
+}
+
+.iuc-logo__text strong {
+	font-size: 18px;
+	letter-spacing: 0.03em;
+}
+
+.iuc-logo__text small {
+	font-size: 11px;
+	letter-spacing: 0.08em;
+	color: var(--iuc-syre);
+}
+
+.iuc-nav {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.iuc-nav__link {
+	color: var(--iuc-white);
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 15px;
+	padding: 8px 14px;
+	border-radius: 6px;
+	transition: background-color 0.15s ease;
+}
+
+.iuc-nav__link:hover,
+.iuc-nav__link.is-active {
+	background-color: rgba(255, 255, 255, 0.16);
+}
+
+.iuc-topbar__actions {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.iuc-user-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+	color: var(--iuc-white);
+	background: rgba(0, 0, 0, 0.18);
+	padding: 6px 12px;
+	border-radius: 999px;
+}
+
+.iuc-user-badge:hover {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.iuc-user-badge__info {
+	display: flex;
+	flex-direction: column;
+	line-height: 1.2;
+}
+
+.iuc-user-badge__info strong {
+	font-size: 14px;
+}
+
+.iuc-user-badge__info small {
+	font-size: 12px;
+	color: var(--iuc-syre);
+}
+
+.iuc-avatar {
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background-color: var(--iuc-drivkraft);
+	color: var(--iuc-petrol);
+	font-weight: 800;
+	font-size: 13px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.iuc-avatar--petrol {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-white);
+}
+
+/* Knappar (Följer regeln: Drivkraft enbart ihop med Petrol) */
+.iuc-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	font-family: var(--iuc-font);
+	font-weight: 700;
+	font-size: 15px;
+	padding: 10px 18px;
+	border-radius: 6px;
+	border: 2px solid transparent;
+	cursor: pointer;
+	text-decoration: none;
+	transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.iuc-btn--drivkraft {
+	background-color: var(--iuc-drivkraft);
+	color: var(--iuc-petrol);
+}
+
+.iuc-btn--drivkraft:hover {
+	background-color: #8cf5a6;
+}
+
+.iuc-btn--petrol-drivkraft {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-drivkraft);
+}
+
+.iuc-btn--petrol-drivkraft:hover {
+	background-color: var(--iuc-petrol-dark);
+}
+
+.iuc-btn--small-petrol {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-white);
+	padding: 7px 14px;
+	font-size: 14px;
+}
+
+.iuc-btn--outline-light {
+	border-color: rgba(255, 255, 255, 0.7);
+	color: var(--iuc-white);
+	background: transparent;
+	font-size: 14px;
+	padding: 8px 14px;
+}
+
+.iuc-btn--outline-light:hover {
+	background: rgba(255, 255, 255, 0.12);
+}
+
+.iuc-btn--outline-petrol {
+	border-color: var(--iuc-petrol);
+	color: var(--iuc-petrol);
+	background: var(--iuc-white);
+}
+
+/* Hero-sektion */
+.iuc-hero {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-white);
+	padding: 36px 0 44px;
+}
+
+.iuc-hero__grid {
+	display: grid;
+	grid-template-columns: 1.5fr 1fr;
+	gap: 32px;
+	align-items: center;
+}
+
+.iuc-eyebrow {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	color: var(--iuc-drivkraft);
+	margin-bottom: 8px;
+}
+
+.iuc-hero__title {
+	color: var(--iuc-white);
+	font-size: 32px;
+	line-height: 1.2;
+	margin: 0 0 12px;
+	font-weight: 800;
+}
+
+.iuc-hero__lead {
+	color: var(--iuc-syre);
+	font-size: 17px;
+	margin: 0 0 22px;
+	max-width: 62ch;
+}
+
+.iuc-global-search {
+	display: flex;
+	gap: 10px;
+	max-width: 600px;
+}
+
+.iuc-global-search__input {
+	flex: 1;
+	padding: 12px 16px;
+	border-radius: 6px;
+	border: 2px solid transparent;
+	font-size: 16px;
+	color: var(--iuc-text);
+	background: var(--iuc-white);
+}
+
+.iuc-hero__card {
+	background-color: var(--iuc-petrol-dark);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: var(--iuc-radius);
+	padding: 24px;
+}
+
+/* Regel: Guld endast i feta rubriker >= 18pt mot Petrol */
+.iuc-gold-heading {
+	color: var(--iuc-guld);
+	font-size: 24px; /* 18pt */
+	font-weight: 800;
+	margin: 0 0 10px;
+	line-height: 1.25;
+}
+
+.iuc-hero__card p {
+	color: var(--iuc-white);
+	margin: 0 0 18px;
+}
+
+.iuc-hero__card-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+}
+
+.iuc-link-light {
+	color: var(--iuc-syre);
+	font-weight: 600;
+	text-decoration: underline;
+	font-size: 15px;
+}
+
+/* Tvåspalts-grid */
+.iuc-main-grid {
+	display: grid;
+	grid-template-columns: 1fr 1.15fr;
+	gap: 32px;
+	padding-top: 32px;
+	padding-bottom: 56px;
+	align-items: start;
+}
+
+/* Tydlig visuell åtskillnad mellan kolumnerna */
+.iuc-col-iuc {
+	background-color: var(--iuc-syre);
+	border-radius: var(--iuc-radius);
+	padding: 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.iuc-col-network {
+	background-color: var(--iuc-white);
+	border: 2px solid var(--iuc-syre);
+	border-radius: var(--iuc-radius);
+	padding: 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.iuc-section-banner {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 12px;
+	padding-bottom: 12px;
+	border-bottom: 2px solid var(--iuc-petrol);
+}
+
+.iuc-section-banner h2 {
+	margin: 4px 0 0;
+	font-size: 24px;
+	color: var(--iuc-petrol);
+	font-weight: 800;
+}
+
+.iuc-sender-tag {
+	display: inline-block;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	padding: 3px 8px;
+	border-radius: 4px;
+}
+
+.iuc-sender-tag--iuc {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-white);
+}
+
+.iuc-sender-tag--member {
+	background-color: var(--iuc-platina);
+	color: var(--iuc-petrol);
+}
+
+/* Kort */
+.iuc-card {
+	background-color: var(--iuc-white);
+	border-radius: 8px;
+	padding: 20px;
+	border: 1px solid var(--iuc-border);
+}
+
+/* Regel: Platina och Syre kombineras inte i samma komponent */
+.iuc-card--platina {
+	background-color: var(--iuc-platina);
+	border-color: transparent;
+}
+
+.iuc-card--syre {
+	background-color: var(--iuc-syre);
+	border-color: #bfd4d6;
+}
+
+.iuc-col-iuc .iuc-card--syre {
+	background-color: var(--iuc-white);
+}
+
+.iuc-card--featured {
+	border-left: 5px solid var(--iuc-petrol);
+}
+
+.iuc-card__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 14px;
+}
+
+.iuc-card__header h3,
+.iuc-card h3 {
+	margin: 0 0 8px;
+	font-size: 19px;
+	color: var(--iuc-petrol);
+	font-weight: 800;
+}
+
+.iuc-card__meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+	font-size: 13px;
+}
+
+.iuc-badge--petrol {
+	background: var(--iuc-petrol);
+	color: var(--iuc-white);
+	padding: 3px 8px;
+	border-radius: 4px;
+	font-weight: 700;
+	font-size: 11px;
+}
+
+.iuc-badge--outline {
+	border: 1px solid var(--iuc-petrol);
+	color: var(--iuc-petrol);
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-weight: 700;
+	font-size: 11px;
+	display: inline-block;
+	margin-bottom: 8px;
+}
+
+.iuc-text-link {
+	color: var(--iuc-petrol);
+	font-weight: 700;
+	font-size: 14px;
+	text-decoration: underline;
+}
+
+/* Event & Nyhetslistor */
+.iuc-event-list,
+.iuc-news-list,
+.iuc-member-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.iuc-event-item {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding-bottom: 14px;
+	border-bottom: 1px solid var(--iuc-border);
+}
+
+.iuc-event-item:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.iuc-date-box {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-white);
+	min-width: 54px;
+	padding: 8px 6px;
+	border-radius: 6px;
+	text-align: center;
+	line-height: 1.1;
+}
+
+.iuc-date-box strong {
+	display: block;
+	font-size: 19px;
+}
+
+.iuc-date-box span {
+	font-size: 11px;
+	font-weight: 700;
+}
+
+.iuc-event-item__info {
+	flex: 1;
+}
+
+.iuc-event-item__info h4,
+.iuc-news-item h4 {
+	margin: 4px 0;
+	font-size: 16px;
+	color: var(--iuc-text);
+}
+
+.iuc-news-item {
+	display: flex;
+	gap: 14px;
+	align-items: flex-start;
+}
+
+.iuc-news-item__date {
+	min-width: 54px;
+	font-weight: 700;
+	font-size: 14px;
+	color: var(--iuc-petrol);
+}
+
+.iuc-news-item h4 a {
+	color: var(--iuc-petrol);
+	text-decoration: none;
+}
+
+.iuc-news-item h4 a:hover {
+	text-decoration: underline;
+}
+
+.iuc-news-item p,
+.iuc-muted {
+	margin: 0;
+	font-size: 14px;
+	color: var(--iuc-muted);
+}
+
+/* Filter-chips & Forumflöde */
+.iuc-filter-bar__top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+.iuc-filter-label {
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--iuc-petrol);
+}
+
+.iuc-clear-btn {
+	background: none;
+	border: none;
+	color: var(--iuc-petrol);
+	font-weight: 700;
+	text-decoration: underline;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.iuc-chip-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.iuc-chip {
+	background-color: var(--iuc-platina);
+	color: var(--iuc-text);
+	border: 1px solid transparent;
+	border-radius: 999px;
+	padding: 6px 14px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.iuc-chip.is-active,
+.iuc-chip:hover {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-white);
+}
+
+.iuc-feed {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.iuc-post-card {
+	background-color: var(--iuc-platina);
+	border-radius: 8px;
+	padding: 18px;
+}
+
+.iuc-post-card__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 12px;
+	margin-bottom: 10px;
+}
+
+.iuc-post-author {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.iuc-company-link {
+	display: block;
+	color: var(--iuc-petrol);
+	font-weight: 700;
+	font-size: 14px;
+	text-decoration: underline;
+}
+
+.iuc-post-time {
+	font-size: 13px;
+	color: var(--iuc-muted);
+}
+
+.iuc-post-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-bottom: 10px;
+}
+
+.iuc-tag {
+	font-size: 12px;
+	font-weight: 700;
+	padding: 3px 9px;
+	border-radius: 4px;
+}
+
+.iuc-tag--type {
+	background-color: var(--iuc-white);
+	color: var(--iuc-petrol);
+}
+
+.iuc-tag--topic,
+.iuc-topic-pill {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-white);
+	font-size: 12px;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 4px;
+	display: inline-block;
+}
+
+.iuc-tag--iuc-answered {
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-drivkraft);
+}
+
+.iuc-post-card__body {
+	margin: 0 0 12px;
+	color: var(--iuc-text);
+}
+
+.iuc-toggle-comments {
+	background: none;
+	border: none;
+	color: var(--iuc-petrol);
+	font-weight: 700;
+	font-size: 14px;
+	cursor: pointer;
+	padding: 0;
+	text-decoration: underline;
+}
+
+.iuc-comments-list {
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid var(--iuc-border);
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.iuc-comment {
+	background: var(--iuc-white);
+	padding: 10px 14px;
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+.iuc-comment.is-iuc-comment {
+	border-left: 4px solid var(--iuc-petrol);
+}
+
+.iuc-comment__head {
+	margin-bottom: 4px;
+	color: var(--iuc-petrol);
+}
+
+.iuc-comment p {
+	margin: 0;
+}
+
+/* Modal */
+.iuc-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.iuc-modal[hidden],
+.iuc-toast[hidden],
+.iuc-clear-btn[hidden],
+.iuc-comments-list[hidden] {
+	display: none !important;
+}
+
+.iuc-modal__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(2, 42, 46, 0.65);
+}
+
+.iuc-modal__dialog {
+	position: relative;
+	background: var(--iuc-white);
+	border-radius: var(--iuc-radius);
+	max-width: 560px;
+	width: 100%;
+	padding: 24px;
+	box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.iuc-modal__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.iuc-modal__header h2 {
+	margin: 0;
+	font-size: 22px;
+	color: var(--iuc-petrol);
+}
+
+.iuc-modal__close {
+	background: none;
+	border: none;
+	font-size: 28px;
+	line-height: 1;
+	cursor: pointer;
+	color: var(--iuc-muted);
+}
+
+.iuc-form-row {
+	margin-bottom: 14px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.iuc-form-row label {
+	font-weight: 700;
+	font-size: 14px;
+	color: var(--iuc-petrol);
+}
+
+.iuc-form-row select,
+.iuc-form-row textarea {
+	padding: 10px 12px;
+	border: 1px solid var(--iuc-border);
+	border-radius: 6px;
+	font-family: var(--iuc-font);
+	font-size: 15px;
+}
+
+.iuc-visibility-notice {
+	background-color: var(--iuc-syre);
+	color: var(--iuc-text);
+	padding: 12px;
+	border-radius: 6px;
+	font-size: 14px;
+	margin-bottom: 18px;
+}
+
+.iuc-modal__footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+/* Systemfeedback Toast */
+.iuc-toast {
+	position: fixed;
+	bottom: 24px;
+	right: 24px;
+	background-color: var(--iuc-petrol);
+	color: var(--iuc-drivkraft);
+	font-weight: 700;
+	padding: 14px 20px;
+	border-radius: 8px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	z-index: 200;
+}
+
+/* Responsivitet */
+@media (max-width: 960px) {
+	.iuc-hero__grid,
+	.iuc-main-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Dölj temats standard-header, sidfot och sidmarginaler på startsidan */
+body.home header.wp-block-template-part,
+body.home footer.wp-block-template-part {
+	display: none !important;
+}
+
+body.home .wp-site-blocks,
+body.home main.wp-block-group,
+body.home .entry-content {
+	padding: 0 !important;
+	margin: 0 !important;
+	max-width: 100% !important;
+}
+
+/* Tvinga fullbredd i Twenty Twenty-Five / Gutenberg på alla sidor med portalen */
+body:has(.iuc-portal-wrapper) {
+	margin: 0 !important;
+	padding: 0 !important;
+	background-color: #ffffff !important;
+}
+
+body:has(.iuc-portal-wrapper) header.wp-block-template-part,
+body:has(.iuc-portal-wrapper) footer.wp-block-template-part {
+	display: none !important;
+}
+
+body:has(.iuc-portal-wrapper) .wp-site-blocks,
+body:has(.iuc-portal-wrapper) .is-layout-constrained,
+body:has(.iuc-portal-wrapper) .is-layout-constrained > *,
+body:has(.iuc-portal-wrapper) .wp-block-group,
+body:has(.iuc-portal-wrapper) .wp-block-post-content,
+body:has(.iuc-portal-wrapper) .iuc-portal-wrapper {
+	max-width: none !important;
+	width: 100% !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+/* Justera sticky-menyn när WordPress admin-bar visas högst upp */
+body.admin-bar .iuc-topbar {
+	top: 32px;
+}
