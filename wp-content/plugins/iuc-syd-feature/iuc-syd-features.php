@@ -3,7 +3,7 @@
  * Plugin Name: IUC Syd Portal Features
  * Description: Company, communication and private-request features extending BuddyPress.
  * Version: 1.0.0
- * Author: IUC Syd fafsacd
+ * Author: IUC Syd fafsacd för webhook
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
